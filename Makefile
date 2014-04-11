@@ -1,4 +1,4 @@
-# $FreeBSD: lang/qore/Makefile 327741 2013-09-20 19:53:09Z bapt $
+# $FreeBSD: head/lang/qore/Makefile 343863 2014-02-12 07:14:49Z rm $
 
 PORTNAME=	qore
 PORTVERSION=	0.8.8
@@ -10,14 +10,13 @@ COMMENT=	The Qore Programming Language
 
 LICENSE=	GPLv2
 
-LIB_DEPENDS=	pcre:${PORTSDIR}/devel/pcre \
-		mpfr:${PORTSDIR}/math/mpfr
+LIB_DEPENDS=	libpcre.so:${PORTSDIR}/devel/pcre \
+		libmpfr.so:${PORTSDIR}/math/mpfr
 BUILD_DEPENDS=	${LOCALBASE}/bin/flex:${PORTSDIR}/textproc/flex \
 		${LOCALBASE}/bin/bison:${PORTSDIR}/devel/bison
 
 USE_BZIP2=	yes
-USE_GMAKE=	yes
-USES=		pathfix iconv
+USES=		gmake iconv pathfix
 USE_OPENSSL=	yes
 USE_LDCONFIG=	yes
 GNU_CONFIGURE=	yes
@@ -28,10 +27,8 @@ CONFIGURE_ENV=	LEX="${LOCALBASE}/bin/flex" \
 CONFIGURE_ARGS=	--disable-debug --disable-static --with-doxygen=no
 LDFLAGS+=	-L${LOCALBASE}/lib
 
-MAN1=		qore.1
 PLIST_SUB=	PORTVERSION=${PORTVERSION}
 
-NO_STAGE=	yes
 .include <bsd.port.pre.mk>
 
 .if ${ARCH} == "powerpc"
